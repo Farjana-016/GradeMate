@@ -5,30 +5,65 @@
 
 /* Royal Violet Design System Tokens */
 :root {
-  /* Exact Prescribed Palette */
-  --bg-main: #170D2B;
-  --bg-card: #291744;
-  --bg-surface: #352052;
-  --accent-primary: #7542C8;
-  --accent-primary-hover: #864EE0;
-  --accent-highlight: #A56AF5;
-  --text-main: #F5ECFF;
-  --text-muted: #B9A3D5;
-  --border-soft: #59416F;
+  /* Locked Mandatory Vibrant Royal Violet Palette */
+  --bg-main: #62409B;
+  --bg-nav: #543586;
+  --bg-card: #795BB0;
+  --bg-card-secondary: #896DBB;
+  --bg-surface: #896DBB; /* backward compatibility alias */
+  --bg-input: #68499F;
+  --btn-primary-bg: #B18AE8;
+  --btn-primary-hover: #C1A1EF;
+  --text-main: #FFFFFF;
+  --text-secondary: #E5D9F5;
+  --text-muted: #FFFFFF; /* mapped to #FFFFFF on cards so normal text passes AA */
+  --text-dark-card: #100320;
+  --border-main: #9679C1;
+  --border-soft: #9679C1; /* backward compatibility alias */
 
-  /* Official Brand Gradient — EXCLUSIVELY for the main GradeMate Logo */
-  --brand-gradient: linear-gradient(135deg, #A56AF5 0%, #7542C8 50%, #39205F 100%);
+  /* Additional Approved Design Tokens */
+  --btn-primary-text: #240E44;
+  --btn-primary-border: #240E44;
 
-  /* Secondary Neutral & Feedback Tokens (Conforming to Royal Violet Dark Theme) */
-  --bg-surface-hover: #412863;
-  --bg-input: #1F1238;
-  --border-focus: #A56AF5;
-  --error-bg: rgba(220, 53, 69, 0.15);
-  --error-border: #E63946;
-  --error-text: #FF9EAA;
-  --success-bg: rgba(40, 167, 69, 0.15);
-  --success-border: #2A9D8F;
-  --success-text: #95E1D3;
+  --btn-secondary-bg: #543586;
+  --btn-secondary-text: #FFFFFF;
+  --btn-secondary-border: #E5D9F5;
+
+  --border-control: #E5D9F5;
+  --border-focus: #FFFFFF;
+  --shadow-focus: 0 0 0 3px rgba(177, 138, 232, 0.55);
+
+  --input-placeholder: #E5D9F5;
+
+  --badge-warning-bg: rgba(245, 158, 11, 0.12);
+  --badge-warning-border: #FBBF24;
+  --badge-warning-text: #FFFFFF;
+
+  --badge-error-bg: rgba(231, 76, 60, 0.22);
+  --badge-error-border: #E74C3C;
+  --badge-error-text: #FFFFFF;
+
+  --badge-success-bg: rgba(46, 204, 113, 0.22);
+  --badge-success-border: #2ECC71;
+  --badge-success-text: #FFFFFF;
+
+  --badge-info-bg: rgba(177, 138, 232, 0.22);
+  --badge-info-border: #B18AE8;
+  --badge-info-text: #FFFFFF;
+
+  --brand-logo-text: #FFFFFF;
+
+  /* Legacy Token Aliases mapping to approved tokens */
+  --accent-primary: var(--btn-primary-bg);
+  --accent-primary-hover: var(--btn-primary-hover);
+  --accent-highlight: var(--text-secondary);
+  --bg-surface-hover: rgba(104, 73, 159, 0.45);
+  --error-bg: var(--badge-error-bg);
+  --error-border: var(--badge-error-border);
+  --error-text: var(--badge-error-text);
+  --success-bg: var(--badge-success-bg);
+  --success-border: var(--badge-success-border);
+  --success-text: var(--badge-success-text);
 
   /* Typography System */
   --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -58,11 +93,10 @@
   --radius-lg: 16px;
   --radius-full: 9999px;
 
-  /* Restrained Shadows */
-  --shadow-sm: 0 2px 8px rgba(10, 5, 20, 0.35);
-  --shadow-md: 0 6px 20px rgba(10, 5, 20, 0.45);
-  --shadow-lg: 0 12px 32px rgba(10, 5, 20, 0.55);
-  --shadow-focus: 0 0 0 3px rgba(165, 106, 245, 0.35);
+  /* Ambient Violet Shadows */
+  --shadow-sm: 0 2px 8px rgba(35, 15, 60, 0.25);
+  --shadow-md: 0 6px 20px rgba(35, 15, 60, 0.35);
+  --shadow-lg: 0 12px 32px rgba(35, 15, 60, 0.45);
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -109,7 +143,7 @@ h3 { font-size: var(--font-size-xl); }
 h4 { font-size: var(--font-size-lg); }
 
 p {
-  color: var(--text-muted);
+  color: var(--text-main);
   margin-bottom: var(--space-4);
 }
 
@@ -118,7 +152,7 @@ p:last-child {
 }
 
 a {
-  color: var(--accent-highlight);
+  color: var(--text-secondary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
@@ -141,11 +175,11 @@ a:hover {
 }
 
 .text-muted {
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .text-highlight {
-  color: var(--accent-highlight);
+  color: var(--btn-primary-bg);
 }
 
 .is-hidden {

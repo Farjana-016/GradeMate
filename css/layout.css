@@ -26,10 +26,10 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(23, 13, 43, 0.94);
+  background-color: var(--bg-nav);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-main);
   height: 72px;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
 
 /* ==========================================================================
    Brand Logo
-   STRICT RULE: Only element wearing the Royal Violet brand gradient.
+   STRICT RULE: Pure text logo in solid brand white for high contrast.
    No icons, no subtitle logos, no section marks.
    ========================================================================== */
 .brand-logo {
@@ -59,7 +59,7 @@
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.025em;
-  color: #A56AF5;
+  color: var(--brand-logo-text);
   display: inline-block;
   transition: opacity var(--transition-fast);
 }
@@ -99,7 +99,7 @@
   padding: var(--space-2) var(--space-4);
   font-size: var(--font-size-sm);
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   border-radius: var(--radius-md);
   transition: color var(--transition-fast), background-color var(--transition-fast);
   white-space: nowrap;
@@ -109,27 +109,28 @@
 
 .nav-link:hover {
   color: var(--text-main);
-  background-color: rgba(53, 32, 82, 0.6);
+  background-color: rgba(137, 109, 187, 0.35);
 }
 
 .nav-link:focus-visible {
   outline: none;
+  border-color: var(--border-focus);
   box-shadow: var(--shadow-focus);
 }
 
 /* Active State for Pure Text Navigation */
 .nav-link.active {
   color: var(--text-main);
-  background-color: var(--bg-surface);
-  border-color: var(--border-soft);
+  background-color: var(--bg-card);
+  border-color: var(--border-control);
   font-weight: 600;
 }
 
 /* Mobile Navigation Toggle (Pure Hamburger button, visible on smaller screens) */
 .nav-toggle {
   display: none;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-soft);
+  background: var(--bg-nav);
+  border: 1px solid var(--border-control);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
   color: var(--text-main);
@@ -140,8 +141,8 @@
 }
 
 .nav-toggle:hover {
-  background-color: var(--bg-surface-hover);
-  border-color: var(--accent-primary);
+  background-color: rgba(137, 109, 187, 0.35);
+  border-color: var(--border-focus);
 }
 
 .nav-toggle:focus-visible {
@@ -195,7 +196,7 @@
 
 .section-description {
   font-size: var(--font-size-base);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   max-width: 680px;
 }
 
@@ -204,7 +205,7 @@
    ========================================================================== */
 .app-footer {
   margin-top: auto;
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border-main);
   padding: var(--space-6) 0;
   background-color: var(--bg-main);
 }
@@ -214,13 +215,13 @@
   align-items: center;
   justify-content: space-between;
   font-size: var(--font-size-xs);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   flex-wrap: wrap;
   gap: var(--space-4);
 }
 
 .footer-note {
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 /* ==========================================================================
@@ -236,8 +237,8 @@
     top: 72px;
     left: 0;
     right: 0;
-    background-color: var(--bg-card);
-    border-bottom: 1px solid var(--border-soft);
+    background-color: var(--bg-nav);
+    border-bottom: 1px solid var(--border-main);
     padding: var(--space-4) var(--space-6);
     box-shadow: var(--shadow-lg);
     display: none;
