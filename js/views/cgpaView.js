@@ -154,8 +154,15 @@
       semOptions += `<option value="custom" ${isCustom ? 'selected' : ''}>Custom Semester...</option>`;
 
       row.innerHTML = `
-        <div class="row-num">1</div>
+        <div class="row-num" aria-hidden="true">1</div>
+        <div class="semester-card-header">
+          <span class="semester-card-title">Semester <span class="card-sem-num">1</span></span>
+          <button type="button" class="btn-remove-row btn-remove-card" aria-label="Remove semester">
+            Remove
+          </button>
+        </div>
         <div class="col-input-wrap semester-col-select">
+          <label class="mobile-field-label">Academic Semester</label>
           <select class="form-select semester-name-select" aria-label="Select semester">
             ${semOptions}
           </select>
@@ -168,7 +175,8 @@
             aria-label="Custom semester name"
           >
         </div>
-        <div class="col-input-wrap">
+        <div class="col-input-wrap col-sgpa-wrap">
+          <label class="mobile-field-label">Semester SGPA</label>
           <input 
             type="number" 
             class="form-input semester-sgpa-input" 
@@ -180,7 +188,8 @@
             aria-label="Semester SGPA"
           >
         </div>
-        <div class="col-input-wrap">
+        <div class="col-input-wrap col-credits-wrap">
+          <label class="mobile-field-label">Total Credits</label>
           <input 
             type="number" 
             class="form-input semester-credits-input" 
@@ -211,14 +220,16 @@
         this.clearResultPanel();
       });
 
-      // Bind Remove Button
-      const removeBtn = row.querySelector('.btn-remove-row');
-      removeBtn.addEventListener('click', () => {
-        if (this.rowsContainerEl.children.length > 1) {
-          row.remove();
-          this.reindexRows();
-          this.clearResultPanel();
-        }
+      // Bind Remove Buttons (both mobile card header & desktop table cell)
+      const removeBtns = row.querySelectorAll('.btn-remove-row');
+      removeBtns.forEach((removeBtn) => {
+        removeBtn.addEventListener('click', () => {
+          if (this.rowsContainerEl.children.length > 1) {
+            row.remove();
+            this.reindexRows();
+            this.clearResultPanel();
+          }
+        });
       });
 
       // Clear results on editing to prevent stale results
@@ -241,13 +252,17 @@
       const rowCount = rows.length;
 
       rows.forEach((row, idx) => {
+        const rowNumber = idx + 1;
         const numEl = row.querySelector('.row-num');
-        if (numEl) numEl.textContent = String(idx + 1);
+        if (numEl) numEl.textContent = String(rowNumber);
 
-        const removeBtn = row.querySelector('.btn-remove-row');
-        if (removeBtn) {
-          removeBtn.disabled = rowCount <= 1;
-        }
+        const cardNumEl = row.querySelector('.card-sem-num');
+        if (cardNumEl) cardNumEl.textContent = String(rowNumber);
+
+        const removeBtns = row.querySelectorAll('.btn-remove-row');
+        removeBtns.forEach((btn) => {
+          btn.disabled = rowCount <= 1;
+        });
       });
     },
 

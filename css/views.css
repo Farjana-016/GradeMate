@@ -753,6 +753,15 @@
   cursor: not-allowed;
 }
 
+/* Mobile-only Semester Card Elements (Hidden on Desktop) */
+.semester-card-header {
+  display: none;
+}
+
+.mobile-field-label {
+  display: none;
+}
+
 /* CGPA 4-Metric Grid */
 .cgpa-metrics-grid {
   grid-template-columns: repeat(4, 1fr);
@@ -764,28 +773,131 @@
   }
 }
 
-/* Mobile Responsive Adaptations for Semester Table */
+/* Mobile Responsive Adaptations for Semester Table & CGPA Controls */
 @media (max-width: 768px) {
+  .top-bar-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-bar-actions .btn {
+    width: 100%;
+  }
+
+  .scale-info-badge {
+    justify-content: center;
+  }
+
+  .semester-table-container {
+    background-color: transparent;
+    border: none;
+    overflow: visible;
+    margin-bottom: var(--space-4);
+  }
+
   .semester-table-header {
     display: none;
   }
 
   .semester-row {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-3);
     padding: var(--space-4);
     background-color: var(--bg-card);
     border: 1px solid var(--border-soft);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-3);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .semester-row:hover {
+    background-color: var(--bg-card);
+    border-color: var(--border-medium);
   }
 
   .semester-row .row-num {
-    text-align: left;
-    font-size: var(--font-size-xs);
+    display: none; /* Desktop column hidden on mobile */
+  }
+
+  .semester-row .col-action-wrap {
+    display: none; /* Desktop column hidden on mobile; action resides in card header */
+  }
+
+  .semester-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-column: 1 / -1;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-1);
+    border-bottom: 1px solid rgba(89, 65, 111, 0.35);
+  }
+
+  .semester-card-title {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
     color: var(--accent-highlight);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  .btn-remove-card {
+    background: transparent;
+    border: 1px solid var(--border-soft);
+    color: var(--error-text);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-3);
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+    width: auto;
+    min-height: 34px;
+    touch-action: manipulation;
+  }
+
+  .btn-remove-card:hover:not(:disabled) {
+    background-color: var(--error-bg);
+    border-color: var(--error-border);
+  }
+
+  .btn-remove-card:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .semester-col-select {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .col-sgpa-wrap {
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .col-credits-wrap {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .mobile-field-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: var(--space-1);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .cgpa-metrics-grid {
