@@ -1,0 +1,720 @@
+/* ==========================================================================
+   GradeMate — View-Specific Styles (Onboarding, Views & Phase Scaffolds)
+   Phase 1: Project Foundation & Design System
+   ========================================================================== */
+
+/* ==========================================================================
+   Onboarding Screen
+   ========================================================================== */
+.onboarding-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background-color: var(--bg-main);
+  position: relative;
+}
+
+.onboarding-wrapper {
+  width: 100%;
+  max-width: 520px;
+  animation: fadeIn 300ms ease-in-out;
+}
+
+.onboarding-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.onboarding-logo-wrap {
+  margin-bottom: var(--space-6);
+}
+
+.onboarding-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--space-2);
+}
+
+.onboarding-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: var(--space-8);
+}
+
+.onboarding-form {
+  text-align: left;
+}
+
+.onboarding-form .form-group {
+  margin-bottom: var(--space-6);
+}
+
+.onboarding-form .form-input {
+  font-size: var(--font-size-md);
+  padding: var(--space-4);
+  background-color: var(--bg-input);
+}
+
+.onboarding-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(89, 65, 111, 0.4);
+  text-align: left;
+}
+
+.onboarding-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.onboarding-feature-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-highlight);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Dashboard View Styles (Phase 2)
+   ========================================================================== */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-10);
+}
+
+.metric-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  border-color: rgba(165, 106, 245, 0.4);
+}
+
+.metric-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.metric-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-value-wrap {
+  margin: var(--space-2) 0;
+}
+
+.metric-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.metric-value.is-empty {
+  color: rgba(185, 163, 213, 0.45);
+}
+
+.metric-footer {
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.metric-note {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Recalculation Alert Notice on Current CGPA Card */
+.recalculate-alert {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background-color: rgba(117, 66, 200, 0.2);
+  border: 1px solid var(--accent-highlight);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  animation: fadeIn 200ms ease-in-out;
+}
+
+.recalculate-text {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.recalculate-btn {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 4px var(--space-2);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.recalculate-btn:hover {
+  background-color: var(--accent-primary-hover);
+}
+
+/* Shortcuts Section */
+.shortcuts-section {
+  margin-top: var(--space-8);
+}
+
+.shortcuts-heading {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: var(--space-4);
+}
+
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.shortcut-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.shortcut-card:hover {
+  border-color: rgba(165, 106, 245, 0.45);
+}
+
+.shortcut-title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: var(--space-2);
+}
+
+.shortcut-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: var(--space-6);
+  flex: 1;
+}
+
+.shortcut-action {
+  margin-top: auto;
+}
+
+/* Responsive Dashboard Breakpoints */
+@media (max-width: 1080px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .shortcuts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .shortcuts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .metric-card {
+    min-height: 140px;
+    padding: var(--space-5);
+  }
+}
+
+/* ==========================================================================
+   SGPA Calculator Styles (Phase 3)
+   ========================================================================== */
+.calculator-container {
+  padding: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.calc-top-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-bottom: var(--space-6);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid rgba(89, 65, 111, 0.4);
+  flex-wrap: wrap;
+}
+
+.calc-semester-group {
+  margin-bottom: 0;
+  min-width: 280px;
+}
+
+.semester-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.scale-info-badge {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-self: flex-start;
+}
+
+.scale-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.scale-badge {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--accent-highlight);
+}
+
+.scale-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Subject Table */
+.subject-table-container {
+  margin-bottom: var(--space-6);
+  background-color: rgba(23, 13, 43, 0.5);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.subject-table-header {
+  display: grid;
+  grid-template-columns: 44px 1fr 130px 180px 80px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-surface);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: center;
+}
+
+.subject-rows-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.subject-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 130px 180px 80px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  align-items: center;
+  border-bottom: 1px solid rgba(89, 65, 111, 0.3);
+  transition: background-color var(--transition-fast);
+}
+
+.subject-row:last-child {
+  border-bottom: none;
+}
+
+.subject-row:hover {
+  background-color: rgba(53, 32, 82, 0.35);
+}
+
+.subject-row .row-num {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.subject-row .btn-remove-row {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--error-text);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  width: 100%;
+}
+
+.subject-row .btn-remove-row:hover:not(:disabled) {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+}
+
+.subject-row .btn-remove-row:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Actions Row */
+.calc-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.actions-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Validation Alert Banner */
+.validation-banner {
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  animation: fadeIn 200ms ease-in-out;
+}
+
+.validation-title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--error-text);
+  margin-bottom: var(--space-2);
+}
+
+.validation-list {
+  list-style: disc;
+  margin-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.validation-list li {
+  font-size: var(--font-size-xs);
+  color: #FFD4D8;
+}
+
+/* Calculation Result Panel */
+.calc-result-panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+  animation: fadeIn 250ms ease-in-out;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(89, 65, 111, 0.4);
+}
+
+.result-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.result-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.result-metric-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+}
+
+.result-metric-card.highlight-card {
+  border-color: var(--accent-highlight);
+  background-color: rgba(41, 23, 68, 0.8);
+}
+
+.result-metric-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.result-metric-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-1);
+}
+
+.result-metric-card.highlight-card .result-metric-value {
+  color: #FFFFFF;
+}
+
+.result-metric-sub {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+/* Save Record Bar */
+.save-record-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(89, 65, 111, 0.4);
+  flex-wrap: wrap;
+}
+
+.save-info {
+  flex: 1;
+  min-width: 240px;
+}
+
+.save-status-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.save-feedback-banner {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  animation: fadeIn 200ms ease-in-out;
+}
+
+.save-feedback-banner.is-success {
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
+}
+
+.save-feedback-banner.is-updated {
+  background-color: rgba(117, 66, 200, 0.2);
+  border: 1px solid var(--accent-highlight);
+  color: #FFFFFF;
+}
+
+/* Mobile Responsive Adaptations for Subject Table */
+@media (max-width: 768px) {
+  .calculator-container {
+    padding: var(--space-5);
+  }
+
+  .subject-table-header {
+    display: none; /* Hide multi-column header on mobile */
+  }
+
+  .subject-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+  }
+
+  .subject-row .row-num {
+    text-align: left;
+    font-size: var(--font-size-xs);
+    color: var(--accent-highlight);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .result-metrics-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .calc-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions-left, .actions-right {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .actions-left .btn, .actions-right .btn {
+    width: 100%;
+  }
+
+  .save-record-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .save-record-bar .btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Section Placeholder View Cards (Phase 1 Foundation Scaffold)
+   Clean, dark-only preview panels confirming SPA routing across all 6 sections
+   ========================================================================== */
+.view-scaffold-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.scaffold-badge-row {
+  margin-bottom: var(--space-4);
+}
+
+.scaffold-heading {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--space-2);
+}
+
+.scaffold-description {
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-6);
+}
+
+.scaffold-spec-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.scaffold-spec-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-highlight);
+  margin-bottom: var(--space-2);
+}
+
+.scaffold-spec-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.scaffold-spec-list li {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.scaffold-spec-list li::before {
+  content: "•";
+  color: var(--accent-primary);
+  font-weight: bold;
+}
+
+@media (max-width: 640px) {
+  .onboarding-card {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .view-scaffold-card {
+    padding: var(--space-6) var(--space-4);
+  }
+}

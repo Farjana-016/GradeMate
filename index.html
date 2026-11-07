@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GradeMate — Academic Grade &amp; SGPA/CGPA Management</title>
+  <meta name="description" content="A modern, sophisticated academic calculator and grade-management web application for college students.">
+
+  <!-- Royal Violet Design System Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+</head>
+<body>
+
+  <!-- =======================================================================
+       1. First-Time User Onboarding Screen
+       Shown when user has not yet saved their profile
+       ======================================================================= -->
+  <div id="onboarding-screen" class="onboarding-screen is-hidden" aria-modal="true" role="dialog" aria-labelledby="onboarding-title">
+    <div class="onboarding-wrapper">
+      <div class="onboarding-card">
+        <div class="onboarding-logo-wrap">
+          <div class="brand-logo">
+            <span class="logo-text">GradeMate</span>
+          </div>
+        </div>
+
+        <h1 id="onboarding-title" class="onboarding-title">Welcome to GradeMate</h1>
+        <p class="onboarding-subtitle">
+          Your modern, accurate academic companion for calculating SGPA, tracking overall CGPA, and planning degree targets.
+        </p>
+
+        <form id="onboarding-form" class="onboarding-form" novalidate>
+          <div class="form-group">
+            <label for="student-name-input" class="form-label">
+              What is your name? <span class="required-indicator">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="student-name-input" 
+              class="form-input" 
+              placeholder="e.g., Alex Mercer" 
+              autocomplete="name" 
+              maxlength="60"
+              required
+            >
+            <div id="onboarding-feedback" class="form-feedback" role="alert"></div>
+            <p class="form-help">Your name is saved strictly in your browser and personalizes your academic dashboard.</p>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-get-started">
+            Get Started
+          </button>
+        </form>
+
+        <div class="onboarding-features-list">
+          <div class="onboarding-feature-item">
+            <span class="onboarding-feature-bullet"></span>
+            <span>Accurate credit-weighted semester SGPA and cumulative CGPA calculations.</span>
+          </div>
+          <div class="onboarding-feature-item">
+            <span class="onboarding-feature-bullet"></span>
+            <span>Strategic target planner to project the average performance required for graduation goals.</span>
+          </div>
+          <div class="onboarding-feature-item">
+            <span class="onboarding-feature-bullet"></span>
+            <span>100% private, client-side data storage with zero cloud dependencies.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       2. Main Application Shell
+       Shown for returning users or immediately after completing onboarding
+       ======================================================================= -->
+  <div class="app-shell is-hidden">
+    <!-- Main Sticky Header -->
+    <header class="app-header">
+      <div class="container">
+        <div class="header-content">
+          <!-- Main GradeMate Branded Logo (ONLY logo, ONLY element using official gradient) -->
+          <a href="#dashboard" class="brand-logo" id="brand-logo" aria-label="GradeMate Home">
+            <span class="logo-text">GradeMate</span>
+          </a>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+            Menu
+          </button>
+
+          <!-- Navigation (Strict Rule: Pure text-only labels, NO icons) -->
+          <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+            <ul class="nav-list" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a href="#dashboard" class="nav-link active" data-target-view="dashboard" role="tab" aria-selected="true">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a href="#sgpa" class="nav-link" data-target-view="sgpa" role="tab" aria-selected="false">
+                  SGPA Calculator
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a href="#cgpa" class="nav-link" data-target-view="cgpa" role="tab" aria-selected="false">
+                  CGPA Calculator
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a href="#target" class="nav-link" data-target-view="target" role="tab" aria-selected="false">
+                  Target CGPA Planner
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a href="#history" class="nav-link" data-target-view="history" role="tab" aria-selected="false">
+                  Calculation History
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a href="#settings" class="nav-link" data-target-view="settings" role="tab" aria-selected="false">
+                  Settings
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <div class="container">
+
+        <!-- 1. DASHBOARD VIEW (Phase 2 Active) -->
+        <section class="view-panel active" id="view-dashboard" role="tabpanel" aria-labelledby="dashboard-greeting-text">
+          <div class="section-header">
+            <h1 class="section-title" id="dashboard-greeting-text">Welcome back!</h1>
+            <p class="section-description">
+              Here is your academic performance overview. All metrics are calculated live from your saved records.
+            </p>
+          </div>
+
+          <!-- Four Summary Cards -->
+          <div class="dashboard-grid">
+            <!-- 1. Current CGPA -->
+            <div class="metric-card" id="card-current-cgpa">
+              <div class="metric-header">
+                <span class="metric-label">Current CGPA</span>
+              </div>
+              <div class="metric-value-wrap">
+                <div class="metric-value is-empty" id="metric-current-cgpa">--</div>
+              </div>
+              <div class="metric-footer">
+                <div class="metric-note" id="metric-cgpa-note">No calculations yet</div>
+                <!-- Recalculation Alert Notice (Shown if newer SGPA records exist) -->
+                <div class="recalculate-alert is-hidden" id="cgpa-recalculate-notice" role="alert">
+                  <span class="recalculate-text">Newer SGPA recorded — Recalculation recommended</span>
+                  <button type="button" class="recalculate-btn" id="btn-recalculate-cgpa">Recalculate CGPA</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Latest SGPA -->
+            <div class="metric-card" id="card-latest-sgpa">
+              <div class="metric-header">
+                <span class="metric-label">Latest SGPA</span>
+              </div>
+              <div class="metric-value-wrap">
+                <div class="metric-value is-empty" id="metric-latest-sgpa">--</div>
+              </div>
+              <div class="metric-footer">
+                <div class="metric-note" id="metric-latest-sgpa-note">No semesters recorded</div>
+              </div>
+            </div>
+
+            <!-- 3. Highest SGPA -->
+            <div class="metric-card" id="card-highest-sgpa">
+              <div class="metric-header">
+                <span class="metric-label">Highest SGPA</span>
+              </div>
+              <div class="metric-value-wrap">
+                <div class="metric-value is-empty" id="metric-highest-sgpa">--</div>
+              </div>
+              <div class="metric-footer">
+                <div class="metric-note" id="metric-highest-sgpa-note">No semesters recorded</div>
+              </div>
+            </div>
+
+            <!-- 4. Semesters Completed (Deduplicated Unique Semesters) -->
+            <div class="metric-card" id="card-semesters-count">
+              <div class="metric-header">
+                <span class="metric-label">Semesters Completed</span>
+              </div>
+              <div class="metric-value-wrap">
+                <div class="metric-value" id="metric-semesters-count">0</div>
+              </div>
+              <div class="metric-footer">
+                <div class="metric-note" id="metric-semesters-note">Start by calculating semester 1</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shortcuts Section -->
+          <div class="shortcuts-section">
+            <h2 class="shortcuts-heading">Quick Actions</h2>
+            <div class="shortcuts-grid">
+              <!-- Shortcut 1: SGPA Calculator -->
+              <div class="shortcut-card">
+                <div>
+                  <h3 class="shortcut-title">SGPA Calculator</h3>
+                  <p class="shortcut-desc">
+                    Calculate semester grade point average based on individual subject credits and letter grades.
+                  </p>
+                </div>
+                <div class="shortcut-action">
+                  <button type="button" class="btn btn-primary btn-block btn-shortcut" data-target-view="sgpa">
+                    Open SGPA Calculator
+                  </button>
+                </div>
+              </div>
+
+              <!-- Shortcut 2: CGPA Calculator -->
+              <div class="shortcut-card">
+                <div>
+                  <h3 class="shortcut-title">CGPA Calculator</h3>
+                  <p class="shortcut-desc">
+                    Calculate cumulative GPA across completed semesters with accurate credit weighting.
+                  </p>
+                </div>
+                <div class="shortcut-action">
+                  <button type="button" class="btn btn-secondary btn-block btn-shortcut" data-target-view="cgpa">
+                    Open CGPA Calculator
+                  </button>
+                </div>
+              </div>
+
+              <!-- Shortcut 3: Target CGPA Planner -->
+              <div class="shortcut-card">
+                <div>
+                  <h3 class="shortcut-title">Target CGPA Planner</h3>
+                  <p class="shortcut-desc">
+                    Determine the average SGPA required in remaining semesters to achieve your graduation goal.
+                  </p>
+                </div>
+                <div class="shortcut-action">
+                  <button type="button" class="btn btn-secondary btn-block btn-shortcut" data-target-view="target">
+                    Open Target Planner
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. SGPA CALCULATOR VIEW (Phase 3 Active) -->
+        <section class="view-panel" id="view-sgpa" role="tabpanel" aria-labelledby="sgpa-title">
+          <div class="section-header">
+            <h1 class="section-title" id="sgpa-title">SGPA Calculator</h1>
+            <p class="section-description">
+              Calculate your semester grade point average with accurate credit-weighted subject entries.
+            </p>
+          </div>
+
+          <div class="calculator-container card">
+            <!-- Top Controls Bar: Semester Selection & Grading Scale Indicator -->
+            <div class="calc-top-bar">
+              <div class="form-group calc-semester-group">
+                <label for="sgpa-semester-select" class="form-label">
+                  Academic Semester <span class="required-indicator">*</span>
+                </label>
+                <div class="semester-input-wrap">
+                  <select id="sgpa-semester-select" class="form-select">
+                    <option value="Semester 1">Semester 1</option>
+                    <option value="Semester 2">Semester 2</option>
+                    <option value="Semester 3">Semester 3</option>
+                    <option value="Semester 4">Semester 4</option>
+                    <option value="Semester 5">Semester 5</option>
+                    <option value="Semester 6">Semester 6</option>
+                    <option value="Semester 7">Semester 7</option>
+                    <option value="Semester 8">Semester 8</option>
+                    <option value="custom">Custom Semester Label...</option>
+                  </select>
+                  <input 
+                    type="text" 
+                    id="sgpa-custom-semester" 
+                    class="form-input is-hidden" 
+                    placeholder="e.g., Summer Term 2026" 
+                    maxlength="40"
+                  >
+                </div>
+              </div>
+
+              <div class="scale-info-badge">
+                <span class="scale-label">Grading Scale:</span>
+                <span class="scale-badge" id="sgpa-scale-name">10-Point Standard</span>
+                <span class="scale-hint">Configurable in Settings</span>
+              </div>
+            </div>
+
+            <!-- Subject Rows Header & Table Container -->
+            <div class="subject-table-container">
+              <div class="subject-table-header">
+                <div class="col-num">#</div>
+                <div class="col-name">Subject / Course Name</div>
+                <div class="col-credits">Credits</div>
+                <div class="col-grade">Grade</div>
+                <div class="col-action">Action</div>
+              </div>
+
+              <!-- Dynamic Subject Rows Injected Here -->
+              <div id="sgpa-subject-rows" class="subject-rows-list"></div>
+            </div>
+
+            <!-- Table Actions: Add Row & Controls -->
+            <div class="calc-actions-row">
+              <div class="actions-left">
+                <button type="button" class="btn btn-secondary" id="btn-add-subject">
+                  + Add Subject
+                </button>
+                <button type="button" class="btn btn-outline" id="btn-reset-sgpa">
+                  Reset Entries
+                </button>
+              </div>
+
+              <div class="actions-right">
+                <button type="button" class="btn btn-primary btn-lg" id="btn-calculate-sgpa">
+                  Calculate SGPA
+                </button>
+              </div>
+            </div>
+
+            <!-- Validation Error Alert Banner -->
+            <div id="sgpa-validation-box" class="validation-banner is-hidden" role="alert">
+              <div class="validation-title">Please fix the following issues:</div>
+              <ul id="sgpa-validation-list" class="validation-list"></ul>
+            </div>
+
+            <!-- Calculation Results Panel (Revealed upon successful calculation) -->
+            <div id="sgpa-result-panel" class="calc-result-panel is-hidden" aria-live="polite">
+              <div class="result-header">
+                <h3 class="result-title">Calculation Summary</h3>
+                <span class="badge badge-purple" id="sgpa-result-semester-badge">Semester 1</span>
+              </div>
+
+              <div class="result-metrics-grid">
+                <!-- Final SGPA Card -->
+                <div class="result-metric-card highlight-card">
+                  <span class="result-metric-label">Semester SGPA</span>
+                  <div class="result-metric-value" id="sgpa-final-value">0.00</div>
+                  <span class="result-metric-sub">Credit-weighted result</span>
+                </div>
+
+                <!-- Total Credits Card -->
+                <div class="result-metric-card">
+                  <span class="result-metric-label">Total Credits</span>
+                  <div class="result-metric-value" id="sgpa-total-credits">0</div>
+                  <span class="result-metric-sub">Sum of subject credits</span>
+                </div>
+
+                <!-- Total Grade Points Card -->
+                <div class="result-metric-card">
+                  <span class="result-metric-label">Weighted Grade Points</span>
+                  <div class="result-metric-value" id="sgpa-total-points">0.0</div>
+                  <span class="result-metric-sub">Credits × Grade points</span>
+                </div>
+              </div>
+
+              <!-- Save to History Area -->
+              <div class="save-record-bar">
+                <div class="save-info">
+                  <span class="save-status-text" id="sgpa-existing-notice">
+                    Ready to save this semester's breakdown to your calculation history.
+                  </span>
+                </div>
+                <button type="button" class="btn btn-primary" id="btn-save-sgpa">
+                  Save to SGPA History
+                </button>
+              </div>
+
+              <!-- Save Feedback Banner -->
+              <div id="sgpa-save-feedback" class="save-feedback-banner is-hidden" role="status"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. CGPA CALCULATOR VIEW (Phase 4) -->
+        <section class="view-panel" id="view-cgpa" role="tabpanel" aria-labelledby="cgpa-title">
+          <div class="section-header">
+            <h1 class="section-title" id="cgpa-title">CGPA Calculator</h1>
+            <p class="section-description">
+              Calculate overall cumulative grade point average with strict credit weighting across semesters.
+            </p>
+          </div>
+
+          <div class="view-scaffold-card">
+            <div class="scaffold-badge-row">
+              <span class="badge badge-purple">Ready for Phase 4</span>
+            </div>
+            <h2 class="scaffold-heading">Cumulative Grade Calculator Foundation</h2>
+            <p class="scaffold-description">
+              Navigation to the CGPA section is active. In Phase 4, this container will host multi-semester credit-weighted calculations and the one-click SGPA History import tool.
+            </p>
+            <div class="scaffold-spec-box">
+              <div class="scaffold-spec-title">Phase 4 Feature Scope</div>
+              <ul class="scaffold-spec-list">
+                <li>Dynamic semester entries (Semester label, SGPA, Total semester credits).</li>
+                <li>"Import from SGPA History" button to pre-fill rows from saved unique semesters.</li>
+                <li>Credit-weighted calculation: Sum of (Semester SGPA × Semester Credits) / Total Semester Credits.</li>
+                <li>Save to CGPA History.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. TARGET CGPA PLANNER VIEW (Phase 5) -->
+        <section class="view-panel" id="view-target" role="tabpanel" aria-labelledby="target-title">
+          <div class="section-header">
+            <h1 class="section-title" id="target-title">Target CGPA Planner</h1>
+            <p class="section-description">
+              Determine the average SGPA required in remaining semesters to achieve your degree graduation target.
+            </p>
+          </div>
+
+          <div class="view-scaffold-card">
+            <div class="scaffold-badge-row">
+              <span class="badge badge-purple">Ready for Phase 5</span>
+            </div>
+            <h2 class="scaffold-heading">Degree Goal Solver Foundation</h2>
+            <p class="scaffold-description">
+              Navigation to the Target Planner is active. In Phase 5, this view will feature the target projection engine and feasibility evaluator.
+            </p>
+            <div class="scaffold-spec-box">
+              <div class="scaffold-spec-title">Phase 5 Feature Scope</div>
+              <ul class="scaffold-spec-list">
+                <li>Inputs for Current CGPA, Completed Credits, Target CGPA, and Expected Remaining Credits.</li>
+                <li>Required SGPA solver with mathematical feasibility analysis.</li>
+                <li>Handles Achieved, Achievable, and Impossible target conditions with theoretical ceiling.</li>
+                <li>Clear disclaimer note for academic planning.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. CALCULATION HISTORY VIEW (Phase 6) -->
+        <section class="view-panel" id="view-history" role="tabpanel" aria-labelledby="history-title">
+          <div class="section-header">
+            <h1 class="section-title" id="history-title">Calculation History</h1>
+            <p class="section-description">
+              Review, search, sort, and manage all previously calculated SGPA and CGPA records.
+            </p>
+          </div>
+
+          <div class="view-scaffold-card">
+            <div class="scaffold-badge-row">
+              <span class="badge badge-purple">Ready for Phase 6</span>
+            </div>
+            <h2 class="scaffold-heading">Dual-Tab Calculation Log Foundation</h2>
+            <p class="scaffold-description">
+              Navigation to Calculation History is active. In Phase 6, this container will provide dual tabs (SGPA History & CGPA History), search filters, and record modification tools.
+            </p>
+            <div class="scaffold-spec-box">
+              <div class="scaffold-spec-title">Phase 6 Feature Scope</div>
+              <ul class="scaffold-spec-list">
+                <li>Dual tabs: SGPA History & CGPA History.</li>
+                <li>Detailed modal views displaying subject breakdowns and timestamps.</li>
+                <li>Record editing and individual record deletion with confirmation.</li>
+                <li>Keyword search and sorting controls.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. SETTINGS VIEW (Phase 6) -->
+        <section class="view-panel" id="view-settings" role="tabpanel" aria-labelledby="settings-title">
+          <div class="section-header">
+            <h1 class="section-title" id="settings-title">Settings</h1>
+            <p class="section-description">
+              Configure profile information, academic grading preferences, and data backup tools.
+            </p>
+          </div>
+
+          <div class="view-scaffold-card">
+            <div class="scaffold-badge-row">
+              <span class="badge badge-purple">Ready for Phase 6</span>
+            </div>
+            <h2 class="scaffold-heading">Settings Foundation (Exact 4 Sections)</h2>
+            <p class="scaffold-description">
+              Navigation to Settings is active. In Phase 6, this view will feature strictly the four approved settings sections with no extra categories.
+            </p>
+            <div class="scaffold-spec-box">
+              <div class="scaffold-spec-title">Approved 4 Settings Sections</div>
+              <ul class="scaffold-spec-list">
+                <li><strong>A. Profile Settings:</strong> View and edit student name with immediate dashboard greeting update.</li>
+                <li><strong>B. Academic Preferences:</strong> Configurable grading system, editable grade-to-point mappings, and decimal precision selector.</li>
+                <li><strong>C. Data Management:</strong> JSON export, backup restore with schema validation, and nuclear reset to onboarding.</li>
+                <li><strong>D. About GradeMate:</strong> Version details, formula explanations, and issue reporting.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Application Footer -->
+    <footer class="app-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-left">
+            <span>GradeMate &bull; Academic Grade Management System</span>
+          </div>
+          <div class="footer-note">
+            <span>Private &amp; Local &bull; Royal Violet Theme</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- =======================================================================
+       Application Scripts (Native Modular Architecture, Zero Dependencies)
+       ======================================================================= -->
+  <script src="js/utils/dom.js"></script>
+  <script src="js/utils/time.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/core/calculations.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/views/onboardingView.js"></script>
+  <script src="js/views/dashboardView.js"></script>
+  <script src="js/views/sgpaView.js"></script>
+  <script src="js/views/cgpaView.js"></script>
+  <script src="js/views/targetView.js"></script>
+  <script src="js/views/historyView.js"></script>
+  <script src="js/views/settingsView.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
