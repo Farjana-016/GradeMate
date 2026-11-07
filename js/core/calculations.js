@@ -73,7 +73,7 @@
       }
 
       const cgpa = totalCredits > 0 ? weightedTotal / totalCredits : 0;
-      return { cgpa, totalCredits, semesterCount: validCount };
+      return { cgpa, totalCredits, semesterCount: validCount, totalPoints: weightedTotal };
     },
 
     /**

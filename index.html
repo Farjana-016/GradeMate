@@ -387,7 +387,7 @@
           </div>
         </section>
 
-        <!-- 3. CGPA CALCULATOR VIEW (Phase 4) -->
+        <!-- 3. CGPA CALCULATOR VIEW (Phase 4 Active) -->
         <section class="view-panel" id="view-cgpa" role="tabpanel" aria-labelledby="cgpa-title">
           <div class="section-header">
             <h1 class="section-title" id="cgpa-title">CGPA Calculator</h1>
@@ -396,22 +396,125 @@
             </p>
           </div>
 
-          <div class="view-scaffold-card">
-            <div class="scaffold-badge-row">
-              <span class="badge badge-purple">Ready for Phase 4</span>
+          <div class="calculator-container card">
+            <!-- Top Controls Bar: Calculation Title, Import Button & Scale Indicator -->
+            <div class="calc-top-bar">
+              <div class="form-group calc-title-group">
+                <label for="cgpa-calc-title" class="form-label">
+                  Calculation Title / Label (Optional)
+                </label>
+                <input 
+                  type="text" 
+                  id="cgpa-calc-title" 
+                  class="form-input" 
+                  placeholder="e.g., Year 1-2 Cumulative CGPA" 
+                  maxlength="80"
+                >
+              </div>
+
+              <div class="top-bar-actions">
+                <button type="button" class="btn btn-secondary" id="btn-import-sgpa">
+                  Import from SGPA History
+                </button>
+                <div class="scale-info-badge">
+                  <span class="scale-label">Grading Scale:</span>
+                  <span class="scale-badge" id="cgpa-scale-name">10-Point Standard</span>
+                </div>
+              </div>
             </div>
-            <h2 class="scaffold-heading">Cumulative Grade Calculator Foundation</h2>
-            <p class="scaffold-description">
-              Navigation to the CGPA section is active. In Phase 4, this container will host multi-semester credit-weighted calculations and the one-click SGPA History import tool.
-            </p>
-            <div class="scaffold-spec-box">
-              <div class="scaffold-spec-title">Phase 4 Feature Scope</div>
-              <ul class="scaffold-spec-list">
-                <li>Dynamic semester entries (Semester label, SGPA, Total semester credits).</li>
-                <li>"Import from SGPA History" button to pre-fill rows from saved unique semesters.</li>
-                <li>Credit-weighted calculation: Sum of (Semester SGPA × Semester Credits) / Total Semester Credits.</li>
-                <li>Save to CGPA History.</li>
-              </ul>
+
+            <!-- Import Feedback / Notification Banner -->
+            <div id="cgpa-import-banner" class="import-banner is-hidden" role="status"></div>
+
+            <!-- Semester Rows Table -->
+            <div class="semester-table-container">
+              <div class="semester-table-header">
+                <div class="col-num">#</div>
+                <div class="col-sem">Academic Semester</div>
+                <div class="col-sgpa">Semester SGPA</div>
+                <div class="col-credits">Total Credits</div>
+                <div class="col-action">Action</div>
+              </div>
+
+              <!-- Dynamic Semester Rows Injected Here -->
+              <div id="cgpa-semester-rows" class="semester-rows-list"></div>
+            </div>
+
+            <!-- Table Actions: Add Semester & Controls -->
+            <div class="calc-actions-row">
+              <div class="actions-left">
+                <button type="button" class="btn btn-secondary" id="btn-add-semester">
+                  + Add Semester
+                </button>
+                <button type="button" class="btn btn-outline" id="btn-reset-cgpa">
+                  Reset Entries
+                </button>
+              </div>
+
+              <div class="actions-right">
+                <button type="button" class="btn btn-primary btn-lg" id="btn-calculate-cgpa">
+                  Calculate CGPA
+                </button>
+              </div>
+            </div>
+
+            <!-- Validation Error Alert Banner -->
+            <div id="cgpa-validation-box" class="validation-banner is-hidden" role="alert">
+              <div class="validation-title">Please correct the following issues:</div>
+              <ul id="cgpa-validation-list" class="validation-list"></ul>
+            </div>
+
+            <!-- Calculation Results Panel (Revealed upon successful calculation) -->
+            <div id="cgpa-result-panel" class="calc-result-panel is-hidden" aria-live="polite">
+              <div class="result-header">
+                <h3 class="result-title">Cumulative CGPA Summary</h3>
+                <span class="badge badge-purple" id="cgpa-result-badge">Cumulative</span>
+              </div>
+
+              <div class="result-metrics-grid cgpa-metrics-grid">
+                <!-- 1. Final CGPA Card -->
+                <div class="result-metric-card highlight-card">
+                  <span class="result-metric-label">Cumulative CGPA</span>
+                  <div class="result-metric-value" id="cgpa-final-value">0.00</div>
+                  <span class="result-metric-sub">Credit-weighted average</span>
+                </div>
+
+                <!-- 2. Total Completed Credits Card -->
+                <div class="result-metric-card">
+                  <span class="result-metric-label">Completed Credits</span>
+                  <div class="result-metric-value" id="cgpa-total-credits">0</div>
+                  <span class="result-metric-sub">Sum of semester credits</span>
+                </div>
+
+                <!-- 3. Semesters Included Card -->
+                <div class="result-metric-card">
+                  <span class="result-metric-label">Semesters Included</span>
+                  <div class="result-metric-value" id="cgpa-semester-count">0</div>
+                  <span class="result-metric-sub">Count of valid semesters</span>
+                </div>
+
+                <!-- 4. Total Weighted Grade Points Card -->
+                <div class="result-metric-card">
+                  <span class="result-metric-label">Total Grade Points</span>
+                  <div class="result-metric-value" id="cgpa-total-points">0.0</div>
+                  <span class="result-metric-sub">Σ(SGPA × Credits)</span>
+                </div>
+              </div>
+
+              <!-- Save to History Area -->
+              <div class="save-record-bar">
+                <div class="save-info">
+                  <span class="save-status-text" id="cgpa-save-status">
+                    Save this cumulative calculation to your permanent CGPA history.
+                  </span>
+                </div>
+                <button type="button" class="btn btn-primary" id="btn-save-cgpa">
+                  Save to CGPA History
+                </button>
+              </div>
+
+              <!-- Save Feedback Banner -->
+              <div id="cgpa-save-feedback" class="save-feedback-banner is-hidden" role="status"></div>
             </div>
           </div>
         </section>

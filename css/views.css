@@ -640,6 +640,160 @@
 }
 
 /* ==========================================================================
+   CGPA Calculator Styles (Phase 4)
+   ========================================================================== */
+.calc-title-group {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 280px;
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.import-banner {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  animation: fadeIn 200ms ease-in-out;
+}
+
+.import-banner.is-info {
+  background-color: rgba(117, 66, 200, 0.2);
+  border: 1px solid var(--accent-highlight);
+  color: #FFFFFF;
+}
+
+.import-banner.is-warning {
+  background-color: rgba(230, 57, 70, 0.15);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+}
+
+/* Semester Table */
+.semester-table-container {
+  margin-bottom: var(--space-6);
+  background-color: rgba(23, 13, 43, 0.5);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.semester-table-header {
+  display: grid;
+  grid-template-columns: 44px 1fr 150px 150px 80px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-surface);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: center;
+}
+
+.semester-rows-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.semester-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 150px 150px 80px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  align-items: center;
+  border-bottom: 1px solid rgba(89, 65, 111, 0.3);
+  transition: background-color var(--transition-fast);
+}
+
+.semester-row:last-child {
+  border-bottom: none;
+}
+
+.semester-row:hover {
+  background-color: rgba(53, 32, 82, 0.35);
+}
+
+.semester-row .row-num {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.semester-row .btn-remove-row {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--error-text);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  width: 100%;
+}
+
+.semester-row .btn-remove-row:hover:not(:disabled) {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+}
+
+.semester-row .btn-remove-row:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* CGPA 4-Metric Grid */
+.cgpa-metrics-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 960px) {
+  .cgpa-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile Responsive Adaptations for Semester Table */
+@media (max-width: 768px) {
+  .semester-table-header {
+    display: none;
+  }
+
+  .semester-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+  }
+
+  .semester-row .row-num {
+    text-align: left;
+    font-size: var(--font-size-xs);
+    color: var(--accent-highlight);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cgpa-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
    Section Placeholder View Cards (Phase 1 Foundation Scaffold)
    Clean, dark-only preview panels confirming SPA routing across all 6 sections
    ========================================================================== */
