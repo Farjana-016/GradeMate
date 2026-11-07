@@ -97,6 +97,20 @@
       if (appShell) {
         appShell.classList.remove('is-hidden');
       }
+    },
+
+    /**
+     * Reset onboarding form inputs and error feedback
+     */
+    reset() {
+      if (this.inputEl) {
+        this.inputEl.value = '';
+        this.inputEl.classList.remove('is-invalid');
+      }
+      if (this.feedbackEl) {
+        this.feedbackEl.textContent = '';
+        this.feedbackEl.classList.remove('is-error');
+      }
     }
   };
 

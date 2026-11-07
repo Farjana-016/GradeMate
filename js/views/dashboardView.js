@@ -113,9 +113,9 @@
           ? `${latestCgpa.title} (${latestCgpa.semesterCount || 0} sem)`
           : `Saved calculation • ${latestCgpa.totalCredits || 0} total credits`;
 
-        // Check if newer SGPA records exist after this CGPA was calculated
+        // Check if newer or revised SGPA records exist after this CGPA was calculated
         const hasNewerSgpa = sgpaHistory.some((sgpaRecord) => {
-          const sgpaDate = new Date(sgpaRecord.calculatedAt || sgpaRecord.updatedAt || 0);
+          const sgpaDate = new Date(sgpaRecord.updatedAt || sgpaRecord.calculatedAt || 0);
           return sgpaDate > latestCgpaDate;
         });
 

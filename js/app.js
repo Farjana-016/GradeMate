@@ -173,6 +173,69 @@
       if (activeModule && typeof activeModule.onActivate === 'function') {
         activeModule.onActivate();
       }
+    },
+
+    /**
+     * Complete nuclear application reset coordinator
+     * Wipes storage, clears in-memory and DOM states across all views,
+     * strips URL hash, closes all modals, and returns to pristine onboarding.
+     */
+    executeCompleteReset() {
+      const { Storage, Views } = global.GradeMate;
+
+      // 1. Wipe all physical LocalStorage keys
+      Storage.clearAll();
+
+      // 2. Reset SGPA View inputs, rows, and result panel
+      if (Views.SGPA && typeof Views.SGPA.handleReset === 'function') {
+        Views.SGPA.handleReset();
+      }
+
+      // 3. Reset CGPA View inputs, rows, and result panel
+      if (Views.CGPA && typeof Views.CGPA.handleReset === 'function') {
+        Views.CGPA.handleReset();
+      }
+
+      // 4. Reset Target View inputs, validation, and result panel
+      if (Views.Target && typeof Views.Target.handleReset === 'function') {
+        Views.Target.handleReset();
+      }
+
+      // 5. Reset History View rendered lists, search query, and sort select
+      if (Views.History && typeof Views.History.resetState === 'function') {
+        Views.History.resetState();
+      }
+
+      // 6. Reset Settings View form inputs and status alerts
+      if (Views.Settings && typeof Views.Settings.resetState === 'function') {
+        Views.Settings.resetState();
+      }
+
+      // 7. Re-render Dashboard View to pristine empty state
+      if (Views.Dashboard && typeof Views.Dashboard.render === 'function') {
+        Views.Dashboard.render();
+      }
+
+      // 8. Strip URL hash cleanly without creating navigation history clutter
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      } else {
+        window.location.hash = '';
+      }
+
+      // 9. Reset Onboarding input fields and error states
+      if (Views.Onboarding && typeof Views.Onboarding.reset === 'function') {
+        Views.Onboarding.reset();
+      }
+
+      // 10. Close all open modal overlays
+      const openModals = document.querySelectorAll('.modal-overlay.is-open');
+      openModals.forEach((modal) => modal.classList.remove('is-open'));
+
+      // 11. Reveal pristine first-time onboarding screen
+      if (Views.Onboarding && typeof Views.Onboarding.show === 'function') {
+        Views.Onboarding.show();
+      }
     }
   };
 

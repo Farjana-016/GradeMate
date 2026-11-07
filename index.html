@@ -701,7 +701,7 @@
           </div>
         </section>
 
-        <!-- 5. CALCULATION HISTORY VIEW (Phase 6) -->
+        <!-- 5. CALCULATION HISTORY VIEW (Phase 6 Active) -->
         <section class="view-panel" id="view-history" role="tabpanel" aria-labelledby="history-title">
           <div class="section-header">
             <h1 class="section-title" id="history-title">Calculation History</h1>
@@ -710,27 +710,163 @@
             </p>
           </div>
 
-          <div class="view-scaffold-card">
-            <div class="scaffold-badge-row">
-              <span class="badge badge-purple">Ready for Phase 6</span>
+          <div class="history-container card">
+            <!-- Dual-Tab Navigation Bar -->
+            <div class="history-tabs-bar" role="tablist" aria-label="Calculation History Categories">
+              <button
+                type="button"
+                class="history-tab-btn is-active"
+                id="tab-btn-sgpa"
+                role="tab"
+                aria-selected="true"
+                aria-controls="panel-history-sgpa"
+                data-history-tab="sgpa"
+              >
+                SGPA History
+              </button>
+              <button
+                type="button"
+                class="history-tab-btn"
+                id="tab-btn-cgpa"
+                role="tab"
+                aria-selected="false"
+                aria-controls="panel-history-cgpa"
+                data-history-tab="cgpa"
+              >
+                CGPA History
+              </button>
             </div>
-            <h2 class="scaffold-heading">Dual-Tab Calculation Log Foundation</h2>
-            <p class="scaffold-description">
-              Navigation to Calculation History is active. In Phase 6, this container will provide dual tabs (SGPA History & CGPA History), search filters, and record modification tools.
-            </p>
-            <div class="scaffold-spec-box">
-              <div class="scaffold-spec-title">Phase 6 Feature Scope</div>
-              <ul class="scaffold-spec-list">
-                <li>Dual tabs: SGPA History & CGPA History.</li>
-                <li>Detailed modal views displaying subject breakdowns and timestamps.</li>
-                <li>Record editing and individual record deletion with confirmation.</li>
-                <li>Keyword search and sorting controls.</li>
-              </ul>
+
+            <!-- Toolbar: Search Filter & Sort Dropdown -->
+            <div class="history-toolbar">
+              <div class="history-search-wrap">
+                <input
+                  type="search"
+                  id="history-search-input"
+                  class="form-input history-search-input"
+                  placeholder="Search by semester or title..."
+                  aria-label="Search records"
+                >
+              </div>
+
+              <div class="history-sort-wrap">
+                <label for="history-sort-select" class="sort-label">Sort by:</label>
+                <select id="history-sort-select" class="form-select history-sort-select" aria-label="Sort records">
+                  <option value="date-desc" selected>Date (Newest First)</option>
+                  <option value="date-asc">Date (Oldest First)</option>
+                  <option value="score-desc">Score (Highest First)</option>
+                  <option value="score-asc">Score (Lowest First)</option>
+                  <option value="name-asc">Name (A – Z)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Tab Panel 1: SGPA History -->
+            <div id="panel-history-sgpa" class="history-tab-panel" role="tabpanel" aria-labelledby="tab-btn-sgpa">
+              <div id="history-sgpa-list" class="history-records-grid"></div>
+              <div id="history-sgpa-empty" class="history-empty-state is-hidden">
+                <div class="empty-state-badge">No Records</div>
+                <h3 class="empty-state-title">No SGPA calculations recorded yet</h3>
+                <p class="empty-state-desc">Calculate your semester performance in the SGPA Calculator to populate your academic history.</p>
+                <a href="#sgpa" class="btn btn-primary" data-target-view="sgpa">Open SGPA Calculator</a>
+              </div>
+            </div>
+
+            <!-- Tab Panel 2: CGPA History -->
+            <div id="panel-history-cgpa" class="history-tab-panel is-hidden" role="tabpanel" aria-labelledby="tab-btn-cgpa">
+              <div id="history-cgpa-list" class="history-records-grid"></div>
+              <div id="history-cgpa-empty" class="history-empty-state is-hidden">
+                <div class="empty-state-badge">No Records</div>
+                <h3 class="empty-state-title">No CGPA calculations recorded yet</h3>
+                <p class="empty-state-desc">Combine your semester records in the CGPA Calculator to track your cumulative degree progress.</p>
+                <a href="#cgpa" class="btn btn-primary" data-target-view="cgpa">Open CGPA Calculator</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- History Modals Container -->
+          <!-- 1. View Details Modal -->
+          <div id="modal-history-detail" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
+            <div class="modal-container history-modal-container">
+              <div class="modal-header">
+                <div>
+                  <h3 class="modal-title" id="detail-modal-title">Calculation Details</h3>
+                  <span class="modal-subtitle" id="detail-modal-date">Date unavailable</span>
+                </div>
+                <button type="button" class="btn-modal-close" id="btn-close-detail-x" aria-label="Close modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="modal-stat-grid" id="detail-modal-stats"></div>
+                <div class="modal-table-wrap">
+                  <table class="history-detail-table" id="detail-modal-table">
+                    <thead id="detail-modal-thead"></thead>
+                    <tbody id="detail-modal-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btn-close-detail-modal">Close</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Edit Record Modal -->
+          <div id="modal-history-edit" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+            <div class="modal-container history-modal-container edit-modal-container">
+              <div class="modal-header">
+                <div>
+                  <h3 class="modal-title" id="edit-modal-title">Edit Record</h3>
+                  <span class="modal-subtitle" id="edit-modal-date">Original calculation timestamp preserved</span>
+                </div>
+                <button type="button" class="btn-modal-close" id="btn-close-edit-x" aria-label="Close modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="edit-record-title-input" class="form-label" id="edit-record-title-label">Semester / Title</label>
+                  <input type="text" id="edit-record-title-input" class="form-input" required>
+                </div>
+
+                <div class="edit-items-section">
+                  <h4 class="edit-section-heading" id="edit-items-heading">Breakdown Items</h4>
+                  <div id="edit-items-container" class="edit-items-list"></div>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-add-edit-item">+ Add Item</button>
+                </div>
+
+                <div id="edit-validation-box" class="validation-banner is-hidden" role="alert">
+                  <ul id="edit-validation-list" class="validation-list"></ul>
+                </div>
+
+                <div class="edit-summary-stats" id="edit-summary-stats"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-edit">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btn-save-edit">Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Delete Confirmation Modal -->
+          <div id="modal-history-delete" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+            <div class="modal-container modal-sm">
+              <div class="modal-header">
+                <h3 class="modal-title" id="delete-modal-title">Confirm Deletion</h3>
+                <button type="button" class="btn-modal-close" id="btn-close-delete-x" aria-label="Close modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p class="delete-warning-text">
+                  Are you sure you want to permanently delete this calculation record? This action cannot be undone and will update your Dashboard metrics.
+                </p>
+                <div class="delete-record-preview" id="delete-record-preview"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-delete">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btn-confirm-delete">Delete Record</button>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- 6. SETTINGS VIEW (Phase 6) -->
+        <!-- 6. SETTINGS VIEW (Phase 6 Active: Exact 4 Sections) -->
         <section class="view-panel" id="view-settings" role="tabpanel" aria-labelledby="settings-title">
           <div class="section-header">
             <h1 class="section-title" id="settings-title">Settings</h1>
@@ -739,22 +875,273 @@
             </p>
           </div>
 
-          <div class="view-scaffold-card">
-            <div class="scaffold-badge-row">
-              <span class="badge badge-purple">Ready for Phase 6</span>
+          <div class="settings-sections-stack">
+            <!-- Section 1: Profile Settings -->
+            <div class="settings-section card" id="settings-profile-section">
+              <div class="card-header">
+                <h2 class="card-title">1. Profile Settings</h2>
+                <p class="card-subtitle">Personalize your student identity and dashboard greeting.</p>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="settings-user-name" class="form-label">
+                    Student Name <span class="required-indicator">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="settings-user-name"
+                    class="form-input"
+                    placeholder="e.g., Alex Rivera"
+                    maxlength="50"
+                    required
+                  >
+                  <span class="form-help">Displayed in your personalized dashboard greeting and report headers.</span>
+                </div>
+
+                <div id="settings-profile-feedback" class="save-feedback-banner is-hidden" role="status"></div>
+
+                <div class="settings-actions-row">
+                  <button type="button" class="btn btn-primary" id="btn-save-profile">
+                    Save Profile Name
+                  </button>
+                </div>
+              </div>
             </div>
-            <h2 class="scaffold-heading">Settings Foundation (Exact 4 Sections)</h2>
-            <p class="scaffold-description">
-              Navigation to Settings is active. In Phase 6, this view will feature strictly the four approved settings sections with no extra categories.
-            </p>
-            <div class="scaffold-spec-box">
-              <div class="scaffold-spec-title">Approved 4 Settings Sections</div>
-              <ul class="scaffold-spec-list">
-                <li><strong>A. Profile Settings:</strong> View and edit student name with immediate dashboard greeting update.</li>
-                <li><strong>B. Academic Preferences:</strong> Configurable grading system, editable grade-to-point mappings, and decimal precision selector.</li>
-                <li><strong>C. Data Management:</strong> JSON export, backup restore with schema validation, and nuclear reset to onboarding.</li>
-                <li><strong>D. About GradeMate:</strong> Version details, formula explanations, and issue reporting.</li>
-              </ul>
+
+            <!-- Section 2: Academic Preferences -->
+            <div class="settings-section card" id="settings-preferences-section">
+              <div class="card-header">
+                <h2 class="card-title">2. Academic Preferences</h2>
+                <p class="card-subtitle">Configure your institution's grading system, grade-to-point mappings, and calculation precision.</p>
+              </div>
+              <div class="card-body">
+                <div class="settings-form-grid">
+                  <!-- Grading System Selection -->
+                  <div class="form-group">
+                    <label for="settings-scale-select" class="form-label">Active Grading System</label>
+                    <select id="settings-scale-select" class="form-select">
+                      <option value="scale_10_standard">10-Point Standard Scale (O, A+, A, B+...)</option>
+                      <option value="scale_4_us">4.0 US Scale (A+, A, A-, B+...)</option>
+                      <option value="scale_custom">Custom Grading Scale</option>
+                    </select>
+                    <span class="form-help">Select an institutional preset or customize your own grade values.</span>
+                  </div>
+
+                  <!-- Max Scale Point -->
+                  <div class="form-group">
+                    <label for="settings-max-scale" class="form-label">Maximum Scale Point</label>
+                    <input
+                      type="number"
+                      id="settings-max-scale"
+                      class="form-input"
+                      min="1.0"
+                      max="100.0"
+                      step="0.1"
+                      value="10.0"
+                    >
+                    <span class="form-help">Highest achievable grade point (e.g., 10.0 or 4.0).</span>
+                  </div>
+
+                  <!-- Decimal Precision -->
+                  <div class="form-group">
+                    <label for="settings-precision-select" class="form-label">Decimal Precision</label>
+                    <select id="settings-precision-select" class="form-select">
+                      <option value="2">2 Decimal Places (e.g., 8.75)</option>
+                      <option value="3">3 Decimal Places (e.g., 8.750)</option>
+                    </select>
+                    <span class="form-help">Precision applied to all displayed GPA metrics.</span>
+                  </div>
+
+                  <!-- Minimum Pass Grade -->
+                  <div class="form-group">
+                    <label for="settings-min-pass-grade" class="form-label">Minimum Passing Grade</label>
+                    <input
+                      type="text"
+                      id="settings-min-pass-grade"
+                      class="form-input"
+                      placeholder="e.g., P or D"
+                      maxlength="5"
+                    >
+                    <span class="form-help">Lowest grade representing passing credit.</span>
+                  </div>
+                </div>
+
+                <!-- Editable Grade-to-Point Table -->
+                <div class="grade-table-section">
+                  <div class="grade-table-header-row">
+                    <h3 class="grade-table-title">Grade Letter to Grade Point Mapping</h3>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-add-grade-row">+ Add Grade Letter</button>
+                  </div>
+                  <div class="grade-table-wrap">
+                    <table class="grade-points-table" id="settings-grade-table">
+                      <thead>
+                        <tr>
+                          <th>Grade Letter</th>
+                          <th>Numeric Point Value</th>
+                          <th style="width: 80px; text-align: center;">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="settings-grade-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Institutional Policy Warning Callout -->
+                <div class="policy-notice-box">
+                  <p class="policy-notice-text">
+                    <strong>Institutional Grading Policy:</strong> Grading scales must match your institution's official academic regulations. Modifying grading preferences updates future calculations and display formatting. Historical records preserve their original calculated values and numeric grade points.
+                  </p>
+                </div>
+
+                <div id="settings-preferences-feedback" class="save-feedback-banner is-hidden" role="status"></div>
+
+                <div class="settings-actions-row">
+                  <button type="button" class="btn btn-primary" id="btn-save-preferences">
+                    Save Academic Preferences
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Data Management -->
+            <div class="settings-section card" id="settings-data-section">
+              <div class="card-header">
+                <h2 class="card-title">3. Data Management</h2>
+                <p class="card-subtitle">Export your data for safekeeping, restore from backup, or perform a complete application reset.</p>
+              </div>
+              <div class="card-body">
+                <div class="data-management-grid">
+                  <!-- Export Card -->
+                  <div class="data-action-card">
+                    <h3 class="data-action-title">Export Backup</h3>
+                    <p class="data-action-desc">Download a complete JSON snapshot of your profile, academic preferences, SGPA history, and CGPA history.</p>
+                    <button type="button" class="btn btn-secondary" id="btn-export-backup">
+                      Export JSON Backup
+                    </button>
+                  </div>
+
+                  <!-- Restore Card -->
+                  <div class="data-action-card">
+                    <h3 class="data-action-title">Restore from Backup</h3>
+                    <p class="data-action-desc">Import data from a previously exported GradeMate backup file. Validates schema before updating records.</p>
+                    <input type="file" id="settings-restore-file" accept=".json" class="is-hidden">
+                    <button type="button" class="btn btn-secondary" id="btn-trigger-restore">
+                      Choose Backup File...
+                    </button>
+                  </div>
+                </div>
+
+                <div id="settings-restore-feedback" class="save-feedback-banner is-hidden" role="status"></div>
+
+                <!-- Nuclear Reset Danger Card -->
+                <div class="danger-zone-card">
+                  <div class="danger-zone-content">
+                    <h3 class="danger-zone-title">Clear All Data &amp; Reset Application</h3>
+                    <p class="danger-zone-desc">
+                      Permanently wipes all local profile data, academic preferences, and all saved SGPA and CGPA calculation history. Returns GradeMate to first-time onboarding. This action cannot be reversed.
+                    </p>
+                  </div>
+                  <div class="danger-zone-action">
+                    <button type="button" class="btn btn-danger" id="btn-nuclear-reset">
+                      Clear All Data &amp; Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 4: About GradeMate -->
+            <div class="settings-section card" id="settings-about-section">
+              <div class="card-header">
+                <div class="about-header-top">
+                  <h2 class="card-title">4. About GradeMate</h2>
+                  <span class="badge badge-purple">v1.1.0 • Royal Violet</span>
+                </div>
+                <p class="card-subtitle">A modern, private, and precise academic management platform.</p>
+              </div>
+              <div class="card-body">
+                <p class="about-intro-text">
+                  GradeMate is an academic calculator and grade management web application built for college and university students. All calculation engines execute locally in your web browser with zero remote telemetry, tracking, or cloud dependencies.
+                </p>
+
+                <!-- Academic Formula Reference Cards -->
+                <div class="about-formulas-grid">
+                  <div class="formula-card">
+                    <h3 class="formula-title">Semester Grade Point Average (SGPA)</h3>
+                    <p class="formula-desc">The weighted average of grade points earned across all registered subjects within a single semester:</p>
+                    <div class="formula-math">
+                      SGPA = &sum;(Course Credits &times; Grade Points) &divide; &sum;Course Credits
+                    </div>
+                  </div>
+
+                  <div class="formula-card">
+                    <h3 class="formula-title">Cumulative Grade Point Average (CGPA)</h3>
+                    <p class="formula-desc">The credit-weighted cumulative average of all completed semesters across degree progression:</p>
+                    <div class="formula-math">
+                      CGPA = &sum;(Semester SGPA &times; Semester Credits) &divide; &sum;Semester Credits
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Feedback & Issue Reporting -->
+                <div class="about-footer-row">
+                  <div class="about-meta-text">
+                    GradeMate is private, free, and open-source.
+                  </div>
+                  <a
+                    href="https://github.com/Farjana-016/GradeMate/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-outline"
+                    id="btn-report-issue"
+                  >
+                    Report an Issue on GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings Modals -->
+          <!-- Restore Confirmation Modal -->
+          <div id="modal-settings-restore" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="restore-modal-title">
+            <div class="modal-container modal-sm">
+              <div class="modal-header">
+                <h3 class="modal-title" id="restore-modal-title">Confirm Backup Restoration</h3>
+                <button type="button" class="btn-modal-close" id="btn-close-restore-x" aria-label="Close modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p class="delete-warning-text">
+                  Restoring this backup will replace all current profile settings, preferences, and all saved SGPA/CGPA history records.
+                </p>
+                <div class="restore-meta-preview" id="restore-meta-preview"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-restore">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btn-confirm-restore">Restore Backup</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nuclear Reset Confirmation Modal -->
+          <div id="modal-settings-reset" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+            <div class="modal-container modal-sm">
+              <div class="modal-header">
+                <h3 class="modal-title" id="reset-modal-title">Warning: Reset All Data</h3>
+                <button type="button" class="btn-modal-close" id="btn-close-reset-x" aria-label="Close modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p class="delete-warning-text">
+                  This will permanently delete your profile, custom grading preferences, and all calculation records from browser storage.
+                </p>
+                <p class="delete-warning-sub">
+                  The application will be completely reset and returned to first-time onboarding. Are you sure you wish to proceed?
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-reset">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btn-confirm-reset">Yes, Wipe All Data</button>
+              </div>
             </div>
           </div>
         </section>
@@ -780,18 +1167,18 @@
   <!-- =======================================================================
        Application Scripts (Native Modular Architecture, Zero Dependencies)
        ======================================================================= -->
-  <script src="js/utils/dom.js?v=1.0.6"></script>
-  <script src="js/utils/time.js?v=1.0.6"></script>
-  <script src="js/core/storage.js?v=1.0.6"></script>
-  <script src="js/core/calculations.js?v=1.0.6"></script>
-  <script src="js/core/state.js?v=1.0.6"></script>
-  <script src="js/views/onboardingView.js?v=1.0.6"></script>
-  <script src="js/views/dashboardView.js?v=1.0.6"></script>
-  <script src="js/views/sgpaView.js?v=1.0.6"></script>
-  <script src="js/views/cgpaView.js?v=1.0.6"></script>
-  <script src="js/views/targetView.js?v=1.0.6"></script>
-  <script src="js/views/historyView.js?v=1.0.6"></script>
-  <script src="js/views/settingsView.js?v=1.0.6"></script>
-  <script src="js/app.js?v=1.0.6"></script>
+  <script src="js/utils/dom.js?v=1.0.7"></script>
+  <script src="js/utils/time.js?v=1.0.7"></script>
+  <script src="js/core/storage.js?v=1.0.7"></script>
+  <script src="js/core/calculations.js?v=1.0.7"></script>
+  <script src="js/core/state.js?v=1.0.7"></script>
+  <script src="js/views/onboardingView.js?v=1.0.7"></script>
+  <script src="js/views/dashboardView.js?v=1.0.7"></script>
+  <script src="js/views/sgpaView.js?v=1.0.7"></script>
+  <script src="js/views/cgpaView.js?v=1.0.7"></script>
+  <script src="js/views/targetView.js?v=1.0.7"></script>
+  <script src="js/views/historyView.js?v=1.0.7"></script>
+  <script src="js/views/settingsView.js?v=1.0.7"></script>
+  <script src="js/app.js?v=1.0.7"></script>
 </body>
 </html>
