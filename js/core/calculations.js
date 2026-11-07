@@ -78,7 +78,7 @@
 
     /**
      * Calculate Required Average SGPA to achieve Target CGPA
-     * Formula: (Target CGPA × (Completed + Remaining) - Current CGPA × Completed) / Remaining
+     * Formula: [Target CGPA × (Completed + Remaining) - Current CGPA × Completed] / Remaining
      * @param {number} currentCGPA
      * @param {number} completedCredits
      * @param {number} targetCGPA
@@ -87,50 +87,84 @@
      * @returns {{
      *   requiredSGPA: number,
      *   maxPossibleCGPA: number,
+     *   totalCredits: number,
      *   status: 'achieved' | 'achievable' | 'impossible' | 'invalid',
      *   message: string
      * }}
      */
     calculateTargetSGPA(currentCGPA, completedCredits, targetCGPA, remainingCredits, maxScalePoint = 10.0) {
-      const cur = Number(currentCGPA) || 0;
-      const comp = Number(completedCredits) || 0;
-      const tgt = Number(targetCGPA) || 0;
-      const rem = Number(remainingCredits) || 0;
+      const cur = Number(currentCGPA);
+      const comp = Number(completedCredits);
+      const tgt = Number(targetCGPA);
+      const rem = Number(remainingCredits);
+      const maxScale = Number(maxScalePoint) || 10.0;
 
-      if (rem <= 0 || comp < 0 || tgt <= 0) {
+      // Validate finite numbers
+      if (!Number.isFinite(cur) || !Number.isFinite(comp) || !Number.isFinite(tgt) || !Number.isFinite(rem)) {
         return {
           requiredSGPA: 0,
           maxPossibleCGPA: 0,
+          totalCredits: 0,
           status: 'invalid',
-          message: 'Please provide valid positive credit and grade values.'
+          message: 'All inputs must be valid finite numbers.'
+        };
+      }
+
+      // Check credit and grade bounds (prevent division by zero and negative inputs)
+      if (rem <= 0 || comp < 0 || tgt <= 0 || cur < 0 || tgt > maxScale) {
+        return {
+          requiredSGPA: 0,
+          maxPossibleCGPA: 0,
+          totalCredits: 0,
+          status: 'invalid',
+          message: 'Please provide valid positive credit and grade values within the configured scale.'
+        };
+      }
+
+      // Check inconsistent freshman combination: Current CGPA > 0 with Completed Credits == 0
+      if (cur > 0 && comp === 0) {
+        return {
+          requiredSGPA: 0,
+          maxPossibleCGPA: 0,
+          totalCredits: 0,
+          status: 'invalid',
+          message: 'Inconsistent input: Current CGPA cannot be greater than 0 if Completed Credits is 0. Please enter your completed credits, or set Current CGPA to 0.00 if starting semester 1.'
         };
       }
 
       const totalCredits = comp + rem;
+      // Original mathematical formula
       const requiredSGPA = (tgt * totalCredits - cur * comp) / rem;
-      const maxPossibleCGPA = (cur * comp + maxScalePoint * rem) / totalCredits;
+      // Theoretical maximum CGPA achievable by scoring maxScalePoint in all remaining credits
+      const maxPossibleCGPA = (cur * comp + maxScale * rem) / totalCredits;
 
-      if (tgt <= cur) {
+      // 1. Already Achieved: current standing already meets or exceeds target
+      if (comp > 0 && cur >= tgt) {
         return {
-          requiredSGPA: Math.max(0, requiredSGPA),
+          requiredSGPA, // Exact mathematical formula output
           maxPossibleCGPA,
+          totalCredits,
           status: 'achieved',
-          message: 'Target already achieved based on current academic record.'
+          message: `Your current CGPA (${this.formatPrecision(cur, 2)}) already meets or exceeds your graduation target of ${this.formatPrecision(tgt, 2)}.`
         };
       }
 
-      if (requiredSGPA > maxScalePoint) {
+      // 2. Impossible: required SGPA exceeds maximum scale point
+      if (requiredSGPA > maxScale) {
         return {
           requiredSGPA,
           maxPossibleCGPA,
+          totalCredits,
           status: 'impossible',
-          message: `Target is mathematically impossible on a ${maxScalePoint}-point scale. The maximum theoretical CGPA achievable is ${this.formatPrecision(maxPossibleCGPA)}.`
+          message: `Target is mathematically impossible on a ${maxScale.toFixed(1)}-point scale. The maximum theoretical CGPA achievable is ${this.formatPrecision(maxPossibleCGPA, 2)}.`
         };
       }
 
+      // 3. Achievable: required SGPA falls within the scale
       return {
         requiredSGPA,
         maxPossibleCGPA,
+        totalCredits,
         status: 'achievable',
         message: 'Target is realistically achievable with the required semester performance.'
       };

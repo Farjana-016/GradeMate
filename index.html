@@ -7,10 +7,10 @@
   <meta name="description" content="A modern, sophisticated academic calculator and grade-management web application for college students.">
 
   <!-- Royal Violet Design System Stylesheets -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.5">
-  <link rel="stylesheet" href="css/layout.css?v=1.0.5">
-  <link rel="stylesheet" href="css/components.css?v=1.0.5">
-  <link rel="stylesheet" href="css/views.css?v=1.0.5">
+  <link rel="stylesheet" href="css/main.css?v=1.0.6">
+  <link rel="stylesheet" href="css/layout.css?v=1.0.6">
+  <link rel="stylesheet" href="css/components.css?v=1.0.6">
+  <link rel="stylesheet" href="css/views.css?v=1.0.6">
 </head>
 <body>
 
@@ -519,7 +519,7 @@
           </div>
         </section>
 
-        <!-- 4. TARGET CGPA PLANNER VIEW (Phase 5) -->
+        <!-- 4. TARGET CGPA PLANNER VIEW (Phase 5 Active) -->
         <section class="view-panel" id="view-target" role="tabpanel" aria-labelledby="target-title">
           <div class="section-header">
             <h1 class="section-title" id="target-title">Target CGPA Planner</h1>
@@ -528,22 +528,175 @@
             </p>
           </div>
 
-          <div class="view-scaffold-card">
-            <div class="scaffold-badge-row">
-              <span class="badge badge-purple">Ready for Phase 5</span>
+          <div class="calculator-container card">
+            <!-- Top Controls Bar: Auto-fill from History & Scale Indicator -->
+            <div class="calc-top-bar">
+              <div class="calc-intro-wrap">
+                <span class="calc-intro-text">
+                  Project future semester grade requirements based on current academic standing.
+                </span>
+              </div>
+
+              <div class="top-bar-actions">
+                <button type="button" class="btn btn-secondary" id="btn-autofill-target">
+                  Auto-fill from History
+                </button>
+                <div class="scale-info-badge">
+                  <span class="scale-label">Grading Scale:</span>
+                  <span class="scale-badge" id="target-scale-name">10-Point Standard</span>
+                </div>
+              </div>
             </div>
-            <h2 class="scaffold-heading">Degree Goal Solver Foundation</h2>
-            <p class="scaffold-description">
-              Navigation to the Target Planner is active. In Phase 5, this view will feature the target projection engine and feasibility evaluator.
-            </p>
-            <div class="scaffold-spec-box">
-              <div class="scaffold-spec-title">Phase 5 Feature Scope</div>
-              <ul class="scaffold-spec-list">
-                <li>Inputs for Current CGPA, Completed Credits, Target CGPA, and Expected Remaining Credits.</li>
-                <li>Required SGPA solver with mathematical feasibility analysis.</li>
-                <li>Handles Achieved, Achievable, and Impossible target conditions with theoretical ceiling.</li>
-                <li>Clear disclaimer note for academic planning.</li>
-              </ul>
+
+            <!-- Auto-fill Notification / Feedback Banner -->
+            <div id="target-autofill-banner" class="import-banner is-hidden" role="status"></div>
+
+            <!-- Target Planner 4-Input Grid -->
+            <div class="target-form-grid">
+              <!-- Field 1: Current CGPA -->
+              <div class="form-group">
+                <label for="target-current-cgpa" class="form-label">
+                  Current CGPA <span class="required-indicator">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="target-current-cgpa" 
+                  class="form-input" 
+                  placeholder="e.g., 8.20" 
+                  min="0" 
+                  max="10" 
+                  step="0.01"
+                  required
+                >
+                <span class="form-hint">Cumulative GPA achieved to date</span>
+              </div>
+
+              <!-- Field 2: Completed Credits -->
+              <div class="form-group">
+                <label for="target-completed-credits" class="form-label">
+                  Completed Credits <span class="required-indicator">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="target-completed-credits" 
+                  class="form-input" 
+                  placeholder="e.g., 60.0" 
+                  min="0" 
+                  step="0.5"
+                  required
+                >
+                <span class="form-hint">Total graded credits completed so far</span>
+              </div>
+
+              <!-- Field 3: Target CGPA -->
+              <div class="form-group">
+                <label for="target-desired-cgpa" class="form-label">
+                  Target CGPA <span class="required-indicator">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="target-desired-cgpa" 
+                  class="form-input" 
+                  placeholder="e.g., 8.50" 
+                  min="0.01" 
+                  max="10" 
+                  step="0.01"
+                  required
+                >
+                <span class="form-hint">Desired degree graduation CGPA</span>
+              </div>
+
+              <!-- Field 4: Remaining Credits -->
+              <div class="form-group">
+                <label for="target-remaining-credits" class="form-label">
+                  Remaining Credits <span class="required-indicator">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="target-remaining-credits" 
+                  class="form-input" 
+                  placeholder="e.g., 40.0" 
+                  min="0.5" 
+                  step="0.5"
+                  required
+                >
+                <span class="form-hint">Credits left to complete degree</span>
+              </div>
+            </div>
+
+            <!-- Table Actions: Reset Inputs & Calculate Target Plan -->
+            <div class="calc-actions-row">
+              <div class="actions-left">
+                <button type="button" class="btn btn-outline" id="btn-reset-target">
+                  Reset Inputs
+                </button>
+              </div>
+
+              <div class="actions-right">
+                <button type="button" class="btn btn-primary btn-lg" id="btn-calculate-target">
+                  Calculate Target Plan
+                </button>
+              </div>
+            </div>
+
+            <!-- Validation Error Alert Banner -->
+            <div id="target-validation-box" class="validation-banner is-hidden" role="alert">
+              <div class="validation-title">Please correct the following issues:</div>
+              <ul id="target-validation-list" class="validation-list"></ul>
+            </div>
+
+            <!-- Calculation Results & Feasibility Analysis Panel -->
+            <div id="target-result-panel" class="calc-result-panel is-hidden" aria-live="polite">
+              <div class="result-header">
+                <h3 class="result-title">Target Feasibility Analysis</h3>
+                <span class="badge" id="target-status-badge">Achievable</span>
+              </div>
+
+              <!-- 4 Metrics Grid -->
+              <div class="result-metrics-grid target-metrics-grid">
+                <!-- 1. Required SGPA Card (Primary Highlight Card) -->
+                <div class="result-metric-card highlight-card" id="card-required-sgpa">
+                  <span class="result-metric-label" id="label-required-sgpa">Required Average SGPA</span>
+                  <div class="result-metric-value" id="target-required-sgpa-value">0.00</div>
+                  <span class="result-metric-sub" id="sub-required-sgpa">Across remaining credits</span>
+                </div>
+
+                <!-- 2. Maximum Achievable CGPA (Theoretical Ceiling) -->
+                <div class="result-metric-card" id="card-max-cgpa">
+                  <span class="result-metric-label">Max Achievable CGPA</span>
+                  <div class="result-metric-value" id="target-max-cgpa-value">0.00</div>
+                  <span class="result-metric-sub">Theoretical maximum ceiling</span>
+                </div>
+
+                <!-- 3. Total Degree Credits -->
+                <div class="result-metric-card" id="card-total-credits">
+                  <span class="result-metric-label">Total Degree Credits</span>
+                  <div class="result-metric-value" id="target-total-credits-value">0</div>
+                  <span class="result-metric-sub">Completed + Remaining</span>
+                </div>
+
+                <!-- 4. Target Benchmark -->
+                <div class="result-metric-card" id="card-target-benchmark">
+                  <span class="result-metric-label">Target Benchmark</span>
+                  <div class="result-metric-value" id="target-benchmark-value">0.00</div>
+                  <span class="result-metric-sub">Desired graduation goal</span>
+                </div>
+              </div>
+
+              <!-- Strategic Advisory Commentary Card -->
+              <div class="target-advisory-card" id="target-advisory-card">
+                <div class="advisory-header">
+                  <span class="advisory-title">Academic Advisory &amp; Strategy</span>
+                </div>
+                <p class="advisory-text" id="target-advisory-text"></p>
+              </div>
+
+              <!-- Planning Disclaimer Notice -->
+              <div class="target-disclaimer">
+                <p class="disclaimer-text">
+                  Disclaimer: Projections are mathematical estimates based on credit weighting and the configured grading scale. Institutional grading policies, repeated course forgiveness, or minimum grade thresholds may affect actual graduation outcomes.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -627,18 +780,18 @@
   <!-- =======================================================================
        Application Scripts (Native Modular Architecture, Zero Dependencies)
        ======================================================================= -->
-  <script src="js/utils/dom.js?v=1.0.5"></script>
-  <script src="js/utils/time.js?v=1.0.5"></script>
-  <script src="js/core/storage.js?v=1.0.5"></script>
-  <script src="js/core/calculations.js?v=1.0.5"></script>
-  <script src="js/core/state.js?v=1.0.5"></script>
-  <script src="js/views/onboardingView.js?v=1.0.5"></script>
-  <script src="js/views/dashboardView.js?v=1.0.5"></script>
-  <script src="js/views/sgpaView.js?v=1.0.5"></script>
-  <script src="js/views/cgpaView.js?v=1.0.5"></script>
-  <script src="js/views/targetView.js?v=1.0.5"></script>
-  <script src="js/views/historyView.js?v=1.0.5"></script>
-  <script src="js/views/settingsView.js?v=1.0.5"></script>
-  <script src="js/app.js?v=1.0.5"></script>
+  <script src="js/utils/dom.js?v=1.0.6"></script>
+  <script src="js/utils/time.js?v=1.0.6"></script>
+  <script src="js/core/storage.js?v=1.0.6"></script>
+  <script src="js/core/calculations.js?v=1.0.6"></script>
+  <script src="js/core/state.js?v=1.0.6"></script>
+  <script src="js/views/onboardingView.js?v=1.0.6"></script>
+  <script src="js/views/dashboardView.js?v=1.0.6"></script>
+  <script src="js/views/sgpaView.js?v=1.0.6"></script>
+  <script src="js/views/cgpaView.js?v=1.0.6"></script>
+  <script src="js/views/targetView.js?v=1.0.6"></script>
+  <script src="js/views/historyView.js?v=1.0.6"></script>
+  <script src="js/views/settingsView.js?v=1.0.6"></script>
+  <script src="js/app.js?v=1.0.6"></script>
 </body>
 </html>

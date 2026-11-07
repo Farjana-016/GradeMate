@@ -906,6 +906,102 @@
 }
 
 /* ==========================================================================
+   Target CGPA Planner Styles (Phase 5)
+   ========================================================================== */
+.calc-intro-wrap {
+  flex: 1;
+  min-width: 260px;
+}
+
+.calc-intro-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.target-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.target-metrics-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.badge-achieved {
+  background-color: rgba(117, 66, 200, 0.25);
+  border: 1px solid var(--accent-highlight);
+  color: #FFFFFF;
+}
+
+.badge-impossible {
+  background-color: rgba(230, 57, 70, 0.18);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+}
+
+.target-advisory-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.advisory-header {
+  margin-bottom: var(--space-2);
+}
+
+.advisory-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-highlight);
+}
+
+.advisory-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-main);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.target-disclaimer {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(89, 65, 111, 0.35);
+}
+
+.disclaimer-text {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 960px) {
+  .target-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .target-form-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .target-metrics-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+/* ==========================================================================
    Section Placeholder View Cards (Phase 1 Foundation Scaffold)
    Clean, dark-only preview panels confirming SPA routing across all 6 sections
    ========================================================================== */
