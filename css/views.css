@@ -333,6 +333,34 @@
   border-color: var(--btn-secondary-border);
 }
 
+/* Save to History Buttons Text & Border Standardization */
+#btn-save-sgpa,
+#btn-save-cgpa {
+  background-color: var(--btn-primary-bg);
+  color: #FFFFFF;
+  border: none;
+}
+
+#btn-save-sgpa:hover,
+#btn-save-cgpa:hover {
+  background-color: var(--btn-primary-hover);
+  color: #FFFFFF;
+  border: none;
+}
+
+#btn-save-sgpa:focus-visible,
+#btn-save-cgpa:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(177, 138, 232, 0.55);
+}
+
+#btn-save-sgpa:active,
+#btn-save-cgpa:active {
+  background-color: var(--btn-primary-bg);
+  color: #FFFFFF;
+  border: none;
+}
+
 /* Responsive Dashboard Breakpoints */
 @media (max-width: 1080px) {
   .dashboard-grid {
@@ -746,9 +774,9 @@
 }
 
 .result-metric-card.highlight-card {
-  border: 2px solid var(--btn-primary-bg);
+  border: 1px solid var(--border-main);
   background-color: var(--bg-card);
-  box-shadow: 0 0 16px rgba(177, 138, 232, 0.35);
+  box-shadow: none;
 }
 
 .result-metric-label {
@@ -767,10 +795,6 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: var(--space-1);
-}
-
-.result-metric-card.highlight-card .result-metric-value {
-  color: #FFFFFF;
 }
 
 .result-metric-sub {
@@ -1345,8 +1369,8 @@
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  border: 1px solid var(--btn-primary-border);
+  color: #FFFFFF;
+  border: none;
 }
 
 .history-card-meta {

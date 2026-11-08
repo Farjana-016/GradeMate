@@ -291,6 +291,7 @@
                     class="form-input is-hidden" 
                     placeholder="e.g., Summer Term 2026" 
                     maxlength="40"
+                    aria-label="Custom semester name"
                   >
                 </div>
               </div>
@@ -1025,7 +1026,7 @@
                   <div class="data-action-card">
                     <h3 class="data-action-title">Restore from Backup</h3>
                     <p class="data-action-desc">Import data from a previously exported GradeMate backup file. Validates schema before updating records.</p>
-                    <input type="file" id="settings-restore-file" accept=".json" class="is-hidden">
+                    <input type="file" id="settings-restore-file" accept=".json" class="is-hidden" aria-label="Upload backup JSON file">
                     <button type="button" class="btn btn-secondary" id="btn-trigger-restore">
                       Choose Backup File...
                     </button>
