@@ -354,6 +354,12 @@
   }
 }
 
+@media (max-width: 480px) {
+  .app-main {
+    padding-top: var(--space-4);
+  }
+}
+
 @media (max-width: 360px) {
   .bottom-nav-link {
     min-height: 52px;

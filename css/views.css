@@ -1843,9 +1843,38 @@
    Responsive Adaptations for History & Settings
    ========================================================================== */
 @media (max-width: 768px) {
+  /* History Section Spacing Optimization for Mobile */
+  #view-history .section-header {
+    margin-bottom: var(--space-3);
+  }
+
+  #view-history .section-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-1);
+  }
+
+  #view-history .section-description {
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+    color: var(--text-secondary);
+  }
+
+  .history-tabs-bar {
+    gap: var(--space-1);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-1);
+  }
+
+  .history-tab-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
   .history-toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
   }
 
   .history-sort-wrap {
@@ -1855,6 +1884,32 @@
 
   .history-sort-select {
     flex: 1;
+  }
+
+  /* History Empty-State Container Mobile Optimization */
+  .history-empty-state {
+    padding: 20px var(--space-4);
+    gap: var(--space-2);
+    border-radius: var(--radius-md);
+  }
+
+  .history-empty-state .empty-state-badge {
+    font-size: 0.68rem;
+    padding: 2px 10px;
+  }
+
+  .history-empty-state .empty-state-title {
+    font-size: var(--font-size-base);
+  }
+
+  .history-empty-state .empty-state-desc {
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+    max-width: 380px;
+  }
+
+  .history-empty-state .btn {
+    margin-top: 2px;
   }
 
   .settings-form-grid {
@@ -1893,6 +1948,72 @@
 }
 
 @media (max-width: 480px) {
+  #view-history .section-header {
+    margin-bottom: var(--space-2);
+  }
+
+  #view-history .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 2px;
+  }
+
+  #view-history .section-description {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .history-tabs-bar {
+    margin-bottom: var(--space-2);
+    padding-bottom: 2px;
+  }
+
+  .history-tab-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+
+  .history-toolbar {
+    gap: 6px;
+    margin-bottom: var(--space-2);
+  }
+
+  .history-search-input {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .history-sort-select {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .history-empty-state {
+    padding: 14px 12px;
+    gap: 4px;
+  }
+
+  .history-empty-state .empty-state-badge {
+    font-size: 0.62rem;
+    padding: 1px 8px;
+  }
+
+  .history-empty-state .empty-state-title {
+    font-size: 0.92rem;
+    line-height: 1.2;
+  }
+
+  .history-empty-state .empty-state-desc {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    max-width: 300px;
+  }
+
+  .history-empty-state .btn {
+    margin-top: 3px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+  }
+
   .history-card-header {
     flex-direction: column;
     align-items: flex-start;
