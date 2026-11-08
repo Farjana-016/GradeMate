@@ -344,17 +344,175 @@
 }
 
 @media (max-width: 640px) {
+  /* Academic Performance Statistics — Mobile 2 × 2 Grid */
   .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
   }
-  .shortcuts-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
+
   .metric-card {
+    min-height: 144px;
+    padding: 12px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  /* Specific 2 × 2 grid cell assignments: Top-left: CGPA, Top-right: Latest SGPA, Bottom-left: Highest SGPA, Bottom-right: Semesters Completed */
+  #card-current-cgpa {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  #card-latest-sgpa {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  #card-highest-sgpa {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  #card-semesters-count {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  .metric-header {
+    min-height: 28px;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .metric-value-wrap {
+    margin: 4px 0;
+  }
+
+  .metric-value {
+    font-size: 1.65rem;
+    line-height: 1.1;
+  }
+
+  .metric-footer {
+    min-height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 4px;
+    margin-top: auto;
+  }
+
+  .metric-note {
+    font-size: 0.7rem;
+    line-height: 1.25;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .recalculate-alert {
+    margin-top: 6px;
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .recalculate-text {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .recalculate-btn {
+    font-size: 0.68rem;
+    padding: 4px 6px;
+    white-space: normal;
+  }
+
+  /* Quick Actions — Approved 2+1 Grid Layout */
+  .shortcuts-section {
+    margin-top: var(--space-6);
+  }
+
+  .shortcuts-heading {
+    margin-bottom: var(--space-3);
+  }
+
+  .shortcuts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .shortcuts-grid .shortcut-card {
+    min-width: 0;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Target CGPA Planner card spans full width across both columns */
+  .shortcuts-grid .shortcut-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .shortcut-title {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+
+  .shortcut-desc {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+
+  .shortcut-action .btn-shortcut {
+    white-space: normal;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    padding: 8px 6px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .metric-card {
+    padding: 10px 8px;
     min-height: 140px;
-    padding: var(--space-5);
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+
+  .shortcuts-grid .shortcut-card {
+    padding: 12px 10px;
+  }
+
+  .shortcut-title {
+    font-size: 0.88rem;
+  }
+
+  .shortcut-desc {
+    font-size: 0.74rem;
+  }
+
+  .shortcut-action .btn-shortcut {
+    font-size: 0.74rem;
+    padding: 6px 4px;
+    min-height: 40px;
   }
 }
 

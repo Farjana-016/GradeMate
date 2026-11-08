@@ -204,9 +204,9 @@
           }
         }
 
-        valueEl.textContent = Calculations.formatPrecision(highest.sgpa, precision);
+        valueEl.textContent = Calculations.formatPrecision(Number(highest.sgpa), precision);
         valueEl.classList.remove('is-empty');
-        noteEl.textContent = `Peak: ${highest.semester || 'Semester'} (${highest.sgpa})`;
+        noteEl.textContent = `Peak: ${highest.semester || 'Semester'} (${Calculations.formatPrecision(Number(highest.sgpa), precision)})`;
       } else {
         valueEl.textContent = '--';
         valueEl.classList.add('is-empty');

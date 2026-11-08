@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GradeMate — Academic Grade &amp; SGPA/CGPA Management</title>
   <meta name="description" content="A modern, sophisticated academic calculator and grade-management web application for college students.">
+  <link rel="icon" href="data:,">
 
   <!-- Vibrant Royal Violet Design System Stylesheets -->
   <link rel="stylesheet" href="css/main.css?v=1.0.12">
-  <link rel="stylesheet" href="css/layout.css?v=1.0.12">
+  <link rel="stylesheet" href="css/layout.css?v=1.0.13">
   <link rel="stylesheet" href="css/components.css?v=1.0.12">
-  <link rel="stylesheet" href="css/views.css?v=1.0.12">
+  <link rel="stylesheet" href="css/views.css?v=1.0.13">
 </head>
 <body>
 
@@ -1159,6 +1160,69 @@
         </div>
       </div>
     </footer>
+
+    <!-- Mobile Fixed Bottom Navigation (Mobile Only, Replaces Menu Toggle) -->
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Mobile Navigation">
+      <ul class="bottom-nav-list" role="tablist">
+        <li class="bottom-nav-item" role="presentation">
+          <a href="#dashboard" class="bottom-nav-link active" data-target-view="dashboard" role="tab" aria-selected="true" aria-label="Home Dashboard">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H4a1 1 0 0 1-1-1V9.5z"></path>
+            </svg>
+            <span class="bottom-nav-label">Home</span>
+          </a>
+        </li>
+        <li class="bottom-nav-item" role="presentation">
+          <a href="#sgpa" class="bottom-nav-link" data-target-view="sgpa" role="tab" aria-selected="false" aria-label="SGPA Calculator">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+              <line x1="8" y1="6" x2="16" y2="6"></line>
+              <line x1="16" y1="14" x2="16" y2="18"></line>
+              <path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"></path>
+            </svg>
+            <span class="bottom-nav-label">SGPA</span>
+          </a>
+        </li>
+        <li class="bottom-nav-item" role="presentation">
+          <a href="#cgpa" class="bottom-nav-link" data-target-view="cgpa" role="tab" aria-selected="false" aria-label="CGPA Calculator">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span class="bottom-nav-label">CGPA</span>
+          </a>
+        </li>
+        <li class="bottom-nav-item" role="presentation">
+          <a href="#target" class="bottom-nav-link" data-target-view="target" role="tab" aria-selected="false" aria-label="Target CGPA Planner">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+            <span class="bottom-nav-label">Target</span>
+          </a>
+        </li>
+        <li class="bottom-nav-item" role="presentation">
+          <a href="#history" class="bottom-nav-link" data-target-view="history" role="tab" aria-selected="false" aria-label="Calculation History">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+              <path d="M12 7v5l4 2"></path>
+            </svg>
+            <span class="bottom-nav-label">History</span>
+          </a>
+        </li>
+        <li class="bottom-nav-item" role="presentation">
+          <a href="#settings" class="bottom-nav-link" data-target-view="settings" role="tab" aria-selected="false" aria-label="Settings">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span class="bottom-nav-label">Settings</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 
   <!-- =======================================================================
@@ -1170,12 +1234,12 @@
   <script src="js/core/calculations.js?v=1.0.7"></script>
   <script src="js/core/state.js?v=1.0.7"></script>
   <script src="js/views/onboardingView.js?v=1.0.7"></script>
-  <script src="js/views/dashboardView.js?v=1.0.7"></script>
+  <script src="js/views/dashboardView.js?v=1.0.8"></script>
   <script src="js/views/sgpaView.js?v=1.0.7"></script>
   <script src="js/views/cgpaView.js?v=1.0.7"></script>
   <script src="js/views/targetView.js?v=1.0.7"></script>
   <script src="js/views/historyView.js?v=1.0.7"></script>
   <script src="js/views/settingsView.js?v=1.0.7"></script>
-  <script src="js/app.js?v=1.0.7"></script>
+  <script src="js/app.js?v=1.0.8"></script>
 </body>
 </html>

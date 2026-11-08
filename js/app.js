@@ -74,8 +74,8 @@
     bindNavigation() {
       const { DOM } = global.GradeMate;
 
-      // Pure text navigation links (both desktop & mobile)
-      const navLinks = DOM.qsa('.nav-link');
+      // Navigation links (desktop header & mobile fixed bottom nav)
+      const navLinks = DOM.qsa('.nav-link, .bottom-nav-link');
       navLinks.forEach((link) => {
         DOM.on(link, 'click', (e) => {
           e.preventDefault();
@@ -127,8 +127,8 @@
         window.history.pushState(null, '', `#${viewId}`);
       }
 
-      // Update Navigation Active States
-      const navLinks = DOM.qsa('.nav-link');
+      // Update Navigation Active States (both desktop header & mobile fixed bottom nav)
+      const navLinks = DOM.qsa('.nav-link, .bottom-nav-link');
       navLinks.forEach((link) => {
         const isMatch = link.getAttribute('data-target-view') === viewId;
         link.classList.toggle('active', isMatch);
